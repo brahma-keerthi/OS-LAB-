@@ -52,8 +52,8 @@ void main(){
         }
         else{
             if (prev == curtime - 1){
-                ct[j-1] = curtime + 1;
-                prev = curtime + 1;
+                ++ct[j-1];
+                prev = curtime;
             }
             else{
                 pid[j] = -1;
