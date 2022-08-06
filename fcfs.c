@@ -19,7 +19,7 @@ void main(){
     // Initializing completed array to 0
     int * isCompleted = (int *)calloc(sizeof(int),n);
 
-    int min, index , completed = 0, curtime = 0, pid[20], ct[20], len = n, prev = -1, tottt = 0, totwt = 0, j = 0;
+    int min, index , completed = 0, curtime = 0, pid[20], ct[20], len = n, prev = -2, tottt = 0, totwt = 0, j = 0;
 
     while ( completed != n ){
         index = -1, min = 99999;
@@ -33,7 +33,7 @@ void main(){
                 }
             }
         }
-        
+
         if ( index != -1 ){
             p[index].ct = p[index].bt + curtime;
             p[index].tt = p[index].ct - p[index].at;
@@ -51,14 +51,16 @@ void main(){
             isCompleted[index] = 1;
         }
         else{
-            if (prev == p[index].pid)
-                ++ct[j];
+            if (prev == curtime - 1){
+                ct[j-1] = curtime + 1;
+                prev = curtime + 1;
+            }
             else{
                 pid[j] = -1;
-                ++ct[j];
+                ct[j] = curtime + 1;
                 ++len;
                 ++j;
-                prev = p[index].pid;
+                prev = curtime;
             }
             ++curtime;
         }
