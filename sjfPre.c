@@ -18,7 +18,7 @@ void main(){
         btRemain[i] = p[i].bt;
     }
 
-    int min, index, completed = 0, curtime = 0, tottt = 0, totwt = 0;
+    int min, index, completed = 0, curtime = 0, tottt = 0, totwt = 0, pid[40], ct[40], len = 0, j = 0, prev = -2;
 
     // Initializing completed array to 0
     int *isCompleted = (int *)calloc(sizeof(int), n);
@@ -46,6 +46,17 @@ void main(){
         }
 
         if (index != -1){
+            if ( prev == curtime - 1 && pid[j-1] == p[index].pid ){
+                ++ct[j-1];
+                prev = curtime;
+            }
+            else{
+                pid[j] = p[index].pid;
+                ct[j] = curtime + 1;
+                ++len;
+                ++j;
+                prev = curtime;
+            }
             --btRemain[index];
             ++curtime;
 
@@ -63,7 +74,17 @@ void main(){
             }
         }
         else{
-            printf("CPU idle at %d - %d\n", curtime, curtime + 1);
+            if ( prev == curtime - 1 && pid[j-1] == -1){
+                ++ct[j-1];
+                prev = curtime;
+            }
+            else{
+                pid[j] = -1;
+                ct[j] = curtime + 1;
+                ++len;
+                ++j;
+                prev = curtime;
+            }
             ++curtime;
         }
     }
@@ -72,6 +93,24 @@ void main(){
     for(int i = 0; i<n; ++i)
         printf("%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, p[i].bt, p[i].ct, p[i].tt, p[i].wt);
 
-    printf("\nAvg turn around time >> %.2f\n", (float)tottt/n);
+    printf("\n\nGantt chart >> \n");
+    for(int i = 0; i<len; ++i)
+        printf("-------");
+    printf("\n");
+    for(int i = 0; i<len; ++i){
+        if (pid[i] != -1)
+            printf("  P%d  |", pid[i]);
+        else
+            printf(" IDLE |");
+    }
+    printf("\n");
+    for(int i = 0; i<len; ++i)
+        printf("-------");
+    printf("\n0     ");
+    for(int i = 0; i<len; ++i)
+        printf("%d      ", ct[i]);
+    printf("\n");
+
+    printf("\n\nAvg turn around time >> %.2f\n", (float)tottt/n);
     printf("Avg waiting time >> %.2f\n", (float)totwt/n);
 }
