@@ -19,6 +19,7 @@ void main(){
     int * isCompleted = (int *)calloc(sizeof(int), n);
 
     int curtime = 0, completed = 0, totwt = 0, tottt = 0, temp;
+    int pid[n], ct[n], j = 0;
 
     while ( completed < n ){
         // Finding process from ready queue
@@ -48,6 +49,10 @@ void main(){
             tottt += p[index].tt;
             totwt += p[index].wt;
 
+            pid[j] = p[index].pid;
+            ct[j] = p[index].ct;
+            ++j;
+
             isCompleted[index] = 1;
             ++completed;
             if (completed == 1) temp = curtime;
@@ -67,16 +72,15 @@ void main(){
 	for(int i = 0;i<n; ++i)
 		printf("-----");
 	printf("\n");
-    // printf("|");
 	for(int i = 0;i<n; ++i)
-		printf(" P%d |",p[i].pid);
+		printf(" P%d |", pid[i]);
 	printf("\n");
 	for(int i = 0;i<n; ++i)
 		printf("-----");
 	printf("\n");
 	printf("%d   ", temp);
 	for(int i = 0;i<n; ++i)
-		printf("%d    ",p[i].ct);
+		printf("%d    ", ct[i]);
 	printf("\n");
 
 
