@@ -18,7 +18,7 @@ void main(){
     // Initializing is completed array to 0
     int * isCompleted = (int *)calloc(sizeof(int), n);
 
-    int curtime = 0, completed = 0, totwt = 0, tottt = 0;
+    int curtime = 0, completed = 0, totwt = 0, tottt = 0, temp;
 
     while ( completed < n ){
         // Finding process from ready queue
@@ -50,17 +50,35 @@ void main(){
 
             isCompleted[index] = 1;
             ++completed;
+            if (completed == 1) temp = curtime;
             curtime = p[index].ct;
         }
         else{
             // CPU idle
-            printf("CPU idle at %d - %d time\n", curtime, curtime++);
+            printf("CPU idle at %d - %d time\n", curtime, ++curtime);
         }
     }
 
     printf("\n\nPID\tAT\tBT\tCT\tTT\tWT\n");
     for(int i = 0; i<n ; ++i)
         printf("%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, p[i].bt, p[i].ct, p[i].tt, p[i].wt);
+
+    printf("\nGantt chart\n");
+	for(int i = 0;i<n; ++i)
+		printf("-----");
+	printf("\n");
+    // printf("|");
+	for(int i = 0;i<n; ++i)
+		printf(" P%d |",p[i].pid);
+	printf("\n");
+	for(int i = 0;i<n; ++i)
+		printf("-----");
+	printf("\n");
+	printf("%d   ", temp);
+	for(int i = 0;i<n; ++i)
+		printf("%d    ",p[i].ct);
+	printf("\n");
+
 
     printf("\n\nAvg turn around time >> %.2f\n", (float)tottt/n);
     printf("Avg waiting time >> %.2f\n", (float)totwt/n);
