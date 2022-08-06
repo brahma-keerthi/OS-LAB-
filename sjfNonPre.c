@@ -19,7 +19,7 @@ void main(){
     int * isCompleted = (int *)calloc(sizeof(int), n);
 
     int curtime = 0, completed = 0, totwt = 0, tottt = 0, temp;
-    int pid[n], ct[n], j = 0;
+    int pid[10], ct[10], j = 0, prev = -2, len = n;
 
     while ( completed < n ){
         // Finding process from ready queue
@@ -60,7 +60,18 @@ void main(){
         }
         else{
             // CPU idle
-            printf("CPU idle at %d - %d time\n", curtime, ++curtime);
+            if ( prev == curtime - 1 ){
+                ++ct[j-1];
+                prev = curtime;
+            }
+            else{
+                pid[j] = -1;
+                ct[j] = curtime + 1;
+                ++j;
+                prev = curtime;
+                ++len;
+            }
+            ++curtime;
         }
     }
 
@@ -69,18 +80,22 @@ void main(){
         printf("%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, p[i].bt, p[i].ct, p[i].tt, p[i].wt);
 
     printf("\nGantt chart\n");
-	for(int i = 0;i<n; ++i)
-		printf("-----");
+	for(int i = 0;i<len; ++i)
+		printf("-------");
 	printf("\n");
-	for(int i = 0;i<n; ++i)
-		printf(" P%d |", pid[i]);
+	for(int i = 0;i<len; ++i){
+        if ( pid[i] != -1)
+		    printf("  P%d  |", pid[i]);
+        else
+            printf(" IDLE |");
+    }
 	printf("\n");
-	for(int i = 0;i<n; ++i)
-		printf("-----");
+	for(int i = 0;i<len; ++i)
+		printf("-------");
 	printf("\n");
-	printf("%d   ", temp);
-	for(int i = 0;i<n; ++i)
-		printf("%d    ", ct[i]);
+	printf("0     ");
+	for(int i = 0;i<len; ++i)
+		printf("%d      ", ct[i]);
 	printf("\n");
 
 
