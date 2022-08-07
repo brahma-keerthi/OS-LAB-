@@ -68,6 +68,13 @@ void main(){
         }
     }
 
+    if ( p[0].at != 0 ){
+        pid[j] = -1;
+        ct[j] = p[0].at;
+        ++j;
+        ++len;
+    }
+
     // Putting first arrived process in queue
     enq(0);
     inqueue[0] = 1;
@@ -75,6 +82,7 @@ void main(){
     while ( completed != n ){
         if ( !isEmpty() ){
             index = deq();
+        
             if ( p[index].bt > qt ){
                 p[index].bt -= qt;
                 curtime += qt;
@@ -96,6 +104,16 @@ void main(){
         else{
             ++curtime;
         }
+
+        if ( index == pid[j - 1]){
+            ct[j-1] = curtime;
+        }
+        else{
+            ct[j] = curtime;
+            pid[j] = index;
+            ++j;
+            ++len;
+        }
         // Selecting process which is not in queue and arrived at curtime and putting it to ready queue
         for(int i= 0; i<n && p[i].at <= curtime; ++i){
             if ( p[i].bt == 0 || p[i].pid == p[index].pid || inqueue[i] )
@@ -111,6 +129,27 @@ void main(){
     printf("\nPID\tAT\tBT\tCT\tTT\tWT\n");
     for(int i = 0; i<n; ++i)
         printf("%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].at, bt[i], p[i].ct, p[i].tt, p[i].wt);
+
+    printf("\n\nGantt chart >> \n");
+    for(int i=0; i<len; ++i)
+        printf("-------");
+    printf("\n");
+    for(int i = 0; i<len; ++i){
+        if ( pid[i] != -1 )
+            printf("  P%d  |", pid[i]);
+        else
+            printf(" IDLE |");
+    }
+    printf("\n");
+    for(int i =0; i<len; ++i)
+        printf("-------");
+    printf("\n0     ");
+    for(int i = 0; i<len; ++i){
+        if ( ct[i] < 10 )
+            printf("%d      ", ct[i]);
+        else    
+            printf("%d     ", ct[i]);
+    }
 
     printf("\n\nAvg turn around time >> %.2f\n", (float)tottt/n);
     printf("Avg waiting time >> %.2f\n", (float)totwt/n);
