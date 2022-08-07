@@ -1,35 +1,30 @@
 #!/bin/sh
 
-echo "Enter 2 numbers>> "
-read a 
-read b
-choice=0
+echo "Enter 2 numbers >> "
+read a b
 
-while [ $choice -lt 6 ]
+while [[ true ]]
 do
-    echo "1->Addition\n2->Subtraction\n3->Multiplication\n4->Division\n5->Exit"
-
+    echo "1.Add\n2.Sub\n3.Mul\n4.Div5.Exit\n"
     read choice
 
     case $choice in
-    1) 
-        sum=$(($a + $b))
-        echo "Sum = $sum"
+    1) ((  temp=$a+$b  ))
+        echo "Sum >> $temp"
+        ;;
+    
+    2) ((  temp=$a-$b  ))
+        echo "Diff >> $temp"
         ;;
 
-    2)
-        diff=$(($a- $b))
-        echo "Diff = $diff"
+    3) (( temp=$a*$b  ))
+        echo "Product >> $temp "
         ;;
 
-    3)
-        pro=$(( $a*$b ))
-        echo "Pro = $pro"
+    4) (( temp=$a/$b  ))
+        echo "Quotient >> $temp"
         ;;
 
-    4)
-        quo=$(($a/$b))
-        echo "Quo = $quo"
-        ;;
+    5) exit 2
     esac
 done
