@@ -105,12 +105,12 @@ void main(){
             ++curtime;
         }
 
-        if ( index == pid[j - 1]){
+        if ( p[index].pid == pid[j - 1]){
             ct[j-1] = curtime;
         }
         else{
             ct[j] = curtime;
-            pid[j] = index;
+            pid[j] = p[index].pid;
             ++j;
             ++len;
         }
