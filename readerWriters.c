@@ -2,11 +2,6 @@
 #include <semaphore.h>
 #include <stdio.h>
 
-/*
-This program provides a possible solution for first readers writers problem using mutex and semaphore.
-I have used 10 readers and 5 producers to demonstrate the solution. You can always play with these values.
-*/
-
 sem_t wrt;
 pthread_mutex_t mutex;
 int cnt = 1;
@@ -48,8 +43,8 @@ int main()
     pthread_mutex_init(&mutex, NULL);
     sem_init(&wrt,0,1);
 
-    int a[10] = {1,2,3,4,5,6,7,8,9,10}; //Just used for numbering the producer and consumer
-
+    int a[10] = {1,2,3,4,5,6,7,8,9,10}; 
+    
     for(int i = 0; i < 10; i++) {
         pthread_create(&read[i], NULL, (void *)reader, (void *)&a[i]);
     }
