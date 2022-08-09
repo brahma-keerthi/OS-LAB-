@@ -1,2 +1,3 @@
 # OS-LAB-
-Programs of OS lab
+
+Programs of Operating Systems laboratory ( 20CS46L )
