@@ -140,7 +140,7 @@ void main(){
         else
             printf(" IDLE |");
     }
-    printf("\n");
+    printf("      <-- Process ID\n");
     for(int i =0; i<len; ++i)
         printf("-------");
     printf("\n0     ");
@@ -150,6 +150,7 @@ void main(){
         else    
             printf("%d     ", ct[i]);
     }
+    printf("<-- Pre-empted Time");
 
     printf("\n\nAvg turn around time >> %.2f\n", (float)tottt/n);
     printf("Avg waiting time >> %.2f\n", (float)totwt/n);

@@ -17,7 +17,7 @@ void main(int argc, char * argv[]){
     shmid = shm_open("OS", O_RDWR, 0666);
     printf("PARENT -- ID of shared memory >> %d\n", shmid);
     ftruncate(shmid, 1024);
-    psm = mmap(0, 1024, PROT_WRITE, MAP_SHARED, shmid, 0);
+    psm = mmap(0, 1024, PROT_READ, MAP_SHARED, shmid, 0);
 
     id = fork();
     if (id == 0){
